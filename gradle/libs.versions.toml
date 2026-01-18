@@ -1,0 +1,56 @@
+[versions]
+hytale-mod-plugin = "0.+"
+shadow = "9.3.0"
+
+jetbrains-annotations = "26.0.2-1"
+jspecify = "1.0.0"
+
+kotlin-libraries = "0.1.0+kotlin2.2.10"
+
+kotlin = "2.2.20"
+kotlin-ksp = "2.3.4"
+kordex-gradle = "1.9.0"
+kordex-i18n = "1.1.1"
+kordex = "2.4.1-SNAPSHOT"
+
+kx-coroutines-core-jvm = "1.10.2"
+kotlin-logging = "7.0.13"
+
+autoservice = "1.1.1"
+autoservice-ksp = "1.2.0"
+bouncycastle = "1.80"
+slf4j = "2.0.17"
+
+aspect = "26.01.18"
+
+[libraries]
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+
+kotlin-libraries = { module = "info.hytalemodding:hytale-kotlin-libraries", version.ref = "kotlin-libraries" }
+
+kx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kx-coroutines-core-jvm" }
+kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
+
+autoservice = { module = "com.google.auto.service:auto-service", version.ref = "autoservice" }
+autoservice-ksp = { module = "dev.zacsweers.autoservice:auto-service-ksp", version.ref = "autoservice-ksp" }
+autoservice-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoservice" }
+bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
+#slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-jul = { module = "org.slf4j:slf4j-jdk14", version.ref = "slf4j" }
+
+aspect = { module = "dev.upcraft.ht:Aspect", version.ref = "aspect" }
+
+[bundles]
+
+[plugins]
+hytale = { id = "hytale-mod", version.ref = "hytale-mod-plugin" }
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
+
+kordex-plugin = { id = "dev.kordex.gradle.kordex", version.ref = "kordex-gradle" }
+kordex-plugin-i18n = { id = "dev.kordex.gradle.i18n", version.ref = "kordex-i18n" }
+
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
