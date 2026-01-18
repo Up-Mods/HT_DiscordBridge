@@ -1,0 +1,51 @@
+# https://unicode-org.github.io/icu/userguide/format_parse/messages/mf2.html
+chat:
+  message: "`[{$player.username}]` {$message.content}"
+
+#command:
+#  feedback: |
+#    ```
+#    {$message.content}
+#    ```
+
+player:
+  join: "{$player.username} joined the server"
+  leave: "{$player.username} left the server"
+  lostConnection: "{$player.username} lost connection!"
+  kick: "{$player.username} was kicked"
+  #TODO merge into kick
+  kick_reason: "{$player.username} was kicked: {$reason}"
+
+server:
+  started: "Server started!"
+  shutdown: "Server shutting down!"
+
+botStatus:
+  online: "{$server.onlinePlayerCount} players online"
+  starting: "starting..."
+
+commands:
+  console:
+    name: "console"
+    description: "run a console command on the server"
+    args:
+      command:
+        name: "command"
+        description: "the command to run"
+  whitelist:
+    name: "whitelist"
+    description: "add a player to the whitelist"
+    args:
+      username:
+        name: "username"
+        description: "The username of the player to whitelist"
+    result:
+      alreadyPending: "Player `{$player.username}` is already pending!"
+      alreadyAdded: "Player `{$player.username}` is already whitelisted!"
+      success: "Added player to whitelist: `{$player.username}`"
+
+# -------------------------------------------------------------
+# !these 2 keys are special!
+# TODO get rid of these
+formatPlayerCount: "{$player_count}/{$max_player_count}"
+formatPlayerCountUnlimited: "{$player_count}"
