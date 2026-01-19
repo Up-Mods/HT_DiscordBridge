@@ -4,6 +4,9 @@ import dev.kord.core.Kord
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kordex.core.extensions.Extension
 import dev.kordex.core.extensions.event
+import dev.upcraft.ht.discordbridge.discord.service.AIOBotService
+import dev.upcraft.ht.discordbridge.service.BotService
+import dev.upcraft.ht.discordbridge.util.Services
 import kotlinx.coroutines.launch
 import kotlin.concurrent.Volatile
 
@@ -14,6 +17,7 @@ class KordUtilExtension: Extension() {
         event<ReadyEvent> {
             action {
                 onKordIsReady(event.kord)
+                Services.BOT.setStartupComplete()
             }
         }
     }

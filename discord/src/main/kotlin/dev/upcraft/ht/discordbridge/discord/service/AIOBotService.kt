@@ -19,6 +19,15 @@ import java.util.concurrent.CompletableFuture
 
 @AutoService(BotService::class)
 class AIOBotService : BotService {
+
+    val botStartup: CompletableFuture<Void?> = CompletableFuture()
+
+    override fun setStartupComplete() {
+        botStartup.complete(null)
+    }
+
+    override fun botStartup(): CompletableFuture<Void?> = botStartup
+
     override fun onPlayerJoin(player: PlayerInfo) = runAsync<ServerStatusExtension> {
         val translatedMessage = Translations.Player.join.translateNamed(buildMap { addPlayerContext(player) })
         getJoinLeaveChannel()?.createMessage(translatedMessage)

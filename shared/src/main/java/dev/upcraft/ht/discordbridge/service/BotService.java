@@ -9,6 +9,11 @@ import java.util.concurrent.CompletableFuture;
 
 public interface BotService {
 
+    @Deprecated
+    void setStartupComplete();
+
+    CompletableFuture<Void> botStartup();
+
     void onPlayerJoin(PlayerInfo player);
 
     void onPlayerLeave(PartialPlayerInfo player, PlayerDisconnectReason reason);

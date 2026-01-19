@@ -14,6 +14,7 @@ import dev.upcraft.ht.discordbridge.plugin.events.ChatHandler;
 import dev.upcraft.ht.discordbridge.plugin.events.PlayerCountHandler;
 import dev.upcraft.ht.discordbridge.plugin.events.ServerStatusHandler;
 import dev.upcraft.ht.discordbridge.plugin.util.PendingWhitelistEntries;
+import dev.upcraft.ht.discordbridge.util.Services;
 import org.jspecify.annotations.Nullable;
 
 import java.nio.file.Files;
@@ -90,6 +91,8 @@ public class DiscordBridgeAIO extends JavaPlugin {
             HytaleServer.get().shutdownServer(ShutdownReason.VALIDATE_ERROR.withMessage("Discord bot error: " + throwable.getMessage()));
             return null;
         });
+
+        Services.BOT.botStartup().join();
     }
 
     @Override
