@@ -37,14 +37,13 @@ public class PendingWhitelistEntries {
 
     public void onSetup(DiscordBridgeAIO plugin) {
         plugin.getEventRegistry().registerGlobal((short) -1, PlayerSetupConnectEvent.class, event -> {
-            LOGGER.atInfo().log("CHECKING PLAYER WHITELIST: %s", event.getUsername());
-
             var id = event.getUuid();
             var name = event.getUsername();
 
             synchronized (config) {
                 var pending = config.get();
                 if(pending.players.remove(name)) {
+                    LOGGER.atInfo().log("Adding pending player %s to whitelist", name);
                     var whitelist = getBuiltinWhitelist();
                     whitelist.modify(uuids -> uuids.add(id));
                     config.save();
