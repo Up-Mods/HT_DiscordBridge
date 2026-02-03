@@ -1,6 +1,8 @@
 package dev.upcraft.ht.discordbridge.discord.extensions.commands
 
 import dev.kord.core.behavior.reply
+import dev.kord.gateway.Intent
+import dev.kord.gateway.PrivilegedIntent
 import dev.kordex.core.checks.isNotBot
 import dev.kordex.core.checks.isNotInThread
 import dev.kordex.core.checks.memberFor
@@ -19,6 +21,9 @@ import kotlinx.coroutines.future.await
 
 class CommandProxyExtension(cfg: StartupConfig) : DiscordBridgeExtension(cfg) {
     override val name = "command_proxy"
+
+    @OptIn(PrivilegedIntent::class)
+    override val intents = mutableSetOf(Intent.GuildMessages, Intent.MessageContent)
 
     val operatorRoles = cfg.roles?.serverOperators ?: listOf()
 
