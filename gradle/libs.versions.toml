@@ -27,7 +27,7 @@ aspect = "26.01.18"
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
 jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
 
-kotlin-libraries = { module = "info.hytalemodding:hytale-kotlin-libraries", version.ref = "kotlin-libraries" }
+kotlin-libraries = { module = "info.hytalemods:hytale-kotlin-libraries", version.ref = "kotlin-libraries" }
 
 kx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kx-coroutines-core-jvm" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }

@@ -7,9 +7,7 @@ pluginManagement {
         maven("https://snapshots-repo.kordex.dev")
         maven("https://releases-repo.kordex.dev")
 
-        maven("https://maven.hytale-modding.info/releases") {
-            name = "HytaleModdingReleases"
-        }
+        maven("https://maven.hytale-mods.dev/releases")
     }
 }
 
@@ -32,8 +30,6 @@ dependencyResolutionManagement {
         maven("https://snapshots-repo.kordex.dev")
         maven("https://releases-repo.kordex.dev")
         maven("https://mirror-repo.kordex.dev")
-        maven("https://maven.hytale-modding.info/releases") {
-            name = "HytaleModdingReleases"
-        }
+        maven("https://maven.hytale-mods.dev/releases")
     }
 }
