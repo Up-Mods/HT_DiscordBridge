@@ -44,6 +44,9 @@ commands:
       alreadyAdded: "Player `{$player.username}` is already whitelisted!"
       success: "Added player to whitelist: `{$player.username}`"
 
+hytale:
+  chatMessage: "<color:#5865F2>{$user.display_name}:</color> {$message.content}"
+
 # -------------------------------------------------------------
 # !these 2 keys are special!
 # TODO get rid of these

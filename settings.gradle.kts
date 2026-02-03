@@ -31,5 +31,6 @@ dependencyResolutionManagement {
         maven("https://releases-repo.kordex.dev")
         maven("https://mirror-repo.kordex.dev")
         maven("https://maven.hytale-mods.dev/releases")
+        maven("https://maven.uuid.gg/releases")
     }
 }

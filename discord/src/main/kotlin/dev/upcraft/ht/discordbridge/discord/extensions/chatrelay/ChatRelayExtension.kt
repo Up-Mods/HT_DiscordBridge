@@ -9,8 +9,10 @@ import dev.kordex.core.checks.isNotBot
 import dev.kordex.core.checks.isNotInThread
 import dev.kordex.core.extensions.event
 import dev.upcraft.ht.discordbridge.discord.extensions.DiscordBridgeExtension
+import dev.upcraft.ht.discordbridge.discord.i18n.Translations
 import dev.upcraft.ht.discordbridge.discord.util.Hytale
 import dev.upcraft.ht.discordbridge.discord.util.StartupConfig
+import dev.upcraft.ht.discordbridge.discord.util.addMemberContext
 import dev.upcraft.ht.discordbridge.discord.util.asDiscordUser
 
 class ChatRelayExtension(cfg: StartupConfig) : DiscordBridgeExtension(cfg) {
@@ -32,8 +34,14 @@ class ChatRelayExtension(cfg: StartupConfig) : DiscordBridgeExtension(cfg) {
             action {
                 event.member?.let {
                     val discordUser = it.asDiscordUser()
-                    // TODO fancier format
-                    Hytale.onDiscordChat(discordUser, event.message.content)
+
+                    val formattedMessage = Translations.Hytale.chatMessage
+                        .translateNamed(buildMap {
+                            addMemberContext(it)
+                            put("message.content", event.message.content)
+                        })
+
+                    Hytale.onDiscordChat(discordUser, formattedMessage)
                 }
             }
         }

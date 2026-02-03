@@ -15,6 +15,9 @@ dependencies {
     implementation(libs.aspect)
 //    implementation(libs.kotlin.libraries)
 
+    implementation(libs.tinymessage)
+    shadow(libs.tinymessage)
+
     shadow(project(":discord"))
     implementation(project(":discord"))
     shadow(project(":shared"))

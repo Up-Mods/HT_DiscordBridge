@@ -17,6 +17,7 @@ import dev.upcraft.ht.discordbridge.plugin.console.PluginConsoleSender;
 import dev.upcraft.ht.discordbridge.plugin.util.PendingWhitelistEntries;
 import dev.upcraft.ht.discordbridge.service.HytaleService;
 import dev.upcraft.ht.discordbridge.util.Services;
+import fi.sulku.hytale.TinyMsg;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
@@ -73,8 +74,7 @@ public class AIOHytaleService implements HytaleService {
 
     @Override
     public CompletableFuture<Void> onDiscordChat(DiscordUser user, String message) {
-        var composedMessage = Message.empty().insert(Message.raw(user.displayName()).insert(": ").color("#5865F2")).insert(message); // TODO make translatable
-        return CompletableFuture.runAsync(() -> PlayerHelper.broadcastMessageToAllPlayers(composedMessage));
+        return CompletableFuture.runAsync(() -> PlayerHelper.broadcastMessageToAllPlayers(TinyMsg.parse(message)));
     }
 
     @Override

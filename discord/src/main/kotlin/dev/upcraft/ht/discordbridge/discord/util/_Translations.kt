@@ -1,5 +1,7 @@
 package dev.upcraft.ht.discordbridge.discord.util
 
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.entity.Member
 import dev.upcraft.ht.discordbridge.discord.i18n.Translations
 import dev.upcraft.ht.discordbridge.model.player.PartialPlayerInfo
 import java.util.*
@@ -12,6 +14,12 @@ fun MutableMap<String, Any?>.addPlayerContext(username: String?, uuid: UUID?, na
     username?.let { this["${name}.username"] = it }
     uuid?.let { this["${name}.uuid"] = it }
     addServerContext()
+}
+
+fun MutableMap<String, Any?>.addMemberContext(member: Member, name: String = "user") {
+    this["${name}.id"] = member.id
+    this["${name}.username"] = member.tag
+    this["${name}.display_name"] = member.effectiveName
 }
 
 fun MutableMap<String, Any?>.addMessageContext(message: String?, sender: PartialPlayerInfo? = null) {
