@@ -17,6 +17,7 @@ import dev.upcraft.ht.discordbridge.plugin.util.PendingWhitelistEntries;
 import dev.upcraft.ht.discordbridge.util.Services;
 import org.jspecify.annotations.Nullable;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -86,7 +87,14 @@ public class DiscordBridgeAIO extends JavaPlugin {
             startupConfig = StartupConfig.fromEnv();
         }
 
-        bot = HtDiscordBot.startAsync(startupConfig).exceptionally(throwable -> {
+        var pluginSearchPath = getDataDirectory().resolve("plugins");
+        try {
+            Files.createDirectories(pluginSearchPath);
+        } catch (IOException e) {
+            throw new RuntimeException("unable to create plugin directory at " + pluginSearchPath.toAbsolutePath(), e);
+        }
+
+        bot = HtDiscordBot.startAsync(startupConfig, pluginSearchPath).exceptionally(throwable -> {
             LOGGER.atSevere().withCause(throwable).log("Discord bot error");
             HytaleServer.get().shutdownServer(ShutdownReason.VALIDATE_ERROR.withMessage("Discord bot error: " + throwable.getMessage()));
             return null;

@@ -8,15 +8,25 @@ import dev.upcraft.ht.discordbridge.discord.extensions.commands.CommandProxyExte
 import dev.upcraft.ht.discordbridge.discord.extensions.server_status.ServerStatusExtension
 import dev.upcraft.ht.discordbridge.discord.util.StartupConfig
 import dev.upcraft.ht.discordbridge.discord.util.fromServerStatus
+import dev.upcraft.ht.discordbridge.discord.util.serviceLogger
 import dev.upcraft.ht.discordbridge.model.server.ServerStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
+import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 
 object HtDiscordBot {
-    suspend fun init(cfg: StartupConfig): ExtensibleBot {
+    suspend fun init(cfg: StartupConfig, pluginSearchPath: Path? = null): ExtensibleBot {
         val bot = ExtensibleBot(cfg.token) {
+            plugins {
+                pluginSearchPath?.let {
+                    pluginPaths.clear()
+                    pluginPaths.add(it)
+                }
+            }
+
+
             applicationCommands {
                 defaultGuild(cfg.devGuild)
             }
@@ -40,6 +50,10 @@ object HtDiscordBot {
             }
 
             presence { fromServerStatus(ServerStatus.STARTING) }
+
+            plugins {
+
+            }
         }
 
         _instance = bot
@@ -53,8 +67,8 @@ object HtDiscordBot {
 
     @JvmStatic
     @OptIn(DelicateCoroutinesApi::class)
-    fun startAsync(cfg: StartupConfig): CompletableFuture<Void?> = GlobalScope.future {
-        init(cfg).startAsync()
+    fun startAsync(cfg: StartupConfig, pluginSearchPath: Path?): CompletableFuture<Void?> = GlobalScope.future {
+        init(cfg, pluginSearchPath).startAsync().join()
         return@future null
     }
 }
