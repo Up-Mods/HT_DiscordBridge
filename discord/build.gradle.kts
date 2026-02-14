@@ -19,6 +19,9 @@ dependencies {
     compileOnly(libs.autoservice.annotations)
     ksp(libs.autoservice.ksp)
 
+    implementation(libs.ktor.client.java)
+    implementation(libs.ktor.client.websockets)
+
     // only used in standalone mode
     compileOnly(libs.bouncycastle)
 }

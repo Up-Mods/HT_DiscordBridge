@@ -8,11 +8,17 @@ import dev.upcraft.ht.discordbridge.discord.extensions.commands.CommandProxyExte
 import dev.upcraft.ht.discordbridge.discord.extensions.server_status.ServerStatusExtension
 import dev.upcraft.ht.discordbridge.discord.util.StartupConfig
 import dev.upcraft.ht.discordbridge.discord.util.fromServerStatus
-import dev.upcraft.ht.discordbridge.discord.util.serviceLogger
 import dev.upcraft.ht.discordbridge.model.server.ServerStatus
+import io.ktor.client.*
+import io.ktor.client.engine.java.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.future.future
+import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 
@@ -53,6 +59,26 @@ object HtDiscordBot {
 
             plugins {
 
+            }
+
+            kord {
+                httpClient = HttpClient(Java) {
+                    install(ContentNegotiation) {
+                        json(Json {
+                            encodeDefaults = false
+                            allowStructuredMapKeys = true
+                            ignoreUnknownKeys = true
+                            isLenient = true
+                        })
+                    }
+
+                    install(HttpTimeout) {
+                        requestTimeoutMillis = 1000000
+                        socketTimeoutMillis = 1000000
+                    }
+
+                    install(WebSockets)
+                }
             }
         }
 
