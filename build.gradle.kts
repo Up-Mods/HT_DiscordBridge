@@ -13,7 +13,7 @@ val buildNumber: Int = providers.environmentVariable("BUILD_NUMBER").map { it.to
 val runningOnCI = providers.environmentVariable("CI").orNull.toBoolean()
 
 group = "dev.upcraft.ht.discord-bridge"
-version = SimpleDateFormat("YY.MM.dd").format(buildTime)
+version = SimpleDateFormat("YY.M.d").format(buildTime)
 
 subprojects {
     apply {
