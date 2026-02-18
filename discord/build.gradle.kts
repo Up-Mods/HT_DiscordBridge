@@ -29,6 +29,7 @@ dependencies {
 kordEx {
     // https://github.com/gradle/gradle/issues/31383
     kordExVersion = libs.versions.kordex.asProvider()
+    kordVersion = "0.18.0-SNAPSHOT" // FIXME wait for kordex bump
 
     bot {
         dataCollection(DataCollection.None) // TODO change once embargo is lifted
