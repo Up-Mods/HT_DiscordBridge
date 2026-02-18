@@ -32,7 +32,6 @@ object HtDiscordBot {
                 }
             }
 
-
             applicationCommands {
                 defaultGuild(cfg.devGuild)
             }

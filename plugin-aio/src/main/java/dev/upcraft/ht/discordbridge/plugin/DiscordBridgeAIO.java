@@ -100,7 +100,7 @@ public class DiscordBridgeAIO extends JavaPlugin {
             return null;
         });
 
-        Services.BOT.botStartup().join();
+        Services.BOT.getStartupFuture().join();
     }
 
     @Override
@@ -108,6 +108,7 @@ public class DiscordBridgeAIO extends JavaPlugin {
         // TODO properly stop the bot
         var botCopy = bot;
         if(botCopy != null && !botCopy.isDone()) {
+            LOGGER.atInfo().log("Shutting down Discord Bot");
             botCopy.cancel(true);
         }
         bot = null;

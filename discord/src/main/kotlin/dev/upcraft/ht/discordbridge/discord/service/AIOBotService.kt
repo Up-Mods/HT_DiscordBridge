@@ -18,7 +18,7 @@ import dev.upcraft.ht.discordbridge.service.BotService
 import java.util.concurrent.CompletableFuture
 
 @AutoService(BotService::class)
-class AIOBotService : BotService {
+class AIOBotService : BotServiceInternal {
 
     val botStartup: CompletableFuture<Void?> = CompletableFuture()
 
@@ -26,7 +26,7 @@ class AIOBotService : BotService {
         botStartup.complete(null)
     }
 
-    override fun botStartup(): CompletableFuture<Void?> = botStartup
+    override fun getStartupFuture(): CompletableFuture<Void?> = botStartup
 
     override fun onPlayerJoin(player: PlayerInfo) = runAsync<ServerStatusExtension> {
         val translatedMessage = Translations.Player.join.translateNamed(buildMap { addPlayerContext(player) })
