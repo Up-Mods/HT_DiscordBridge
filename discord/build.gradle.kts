@@ -1,5 +1,4 @@
 
-import dev.kordex.gradle.plugins.kordex.DataCollection
 import dev.kordex.i18n.files.YamlFormat
 import dev.kordex.i18n.messages.formats.ICUFormatV2
 
@@ -32,7 +31,6 @@ kordEx {
     kordVersion = "0.18.0-SNAPSHOT" // FIXME wait for kordex bump
 
     bot {
-        dataCollection(DataCollection.None) // TODO change once embargo is lifted
         version = project.version.toString()
 
         mainClass = "dev.upcraft.ht.discordbridge.bot.main.MainKt"
