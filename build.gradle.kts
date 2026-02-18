@@ -42,12 +42,10 @@ subprojects {
 
 publishing {
     repositories {
-        providers.environmentVariable("MAVEN_USERNAME").orNull?.let { mvnUsername ->
-            maven("https://maven.hytale-mods.dev/releases") {
-                credentials {
-                    username = mvnUsername
-                    password = providers.environmentVariable("MAVEN_PASSWORD").orNull
-                }
+        maven("https://maven.hytale-mods.dev/releases") {
+            credentials {
+                username = providers.environmentVariable("HM_RELEASES_MAVEN_USER").orNull
+                password = providers.environmentVariable("HM_RELEASES_MAVEN_TOKEN").orNull
             }
         }
     }
