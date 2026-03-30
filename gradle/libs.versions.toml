@@ -22,7 +22,7 @@ autoservice-ksp = "1.2.0"
 bouncycastle = "1.80"
 slf4j = "2.0.17"
 
-aspect = "26.2.19"
+aspect = "26.3.30"
 tinymessage = "2.0.1"
 
 [libraries]
