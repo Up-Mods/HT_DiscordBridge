@@ -31,8 +31,8 @@ public class PluginConsoleSender implements CommandSender {
     }
 
     @Override
-    public String getDisplayName() {
-        return delegate.getDisplayName();
+    public String getUsername() {
+        return delegate.getUsername();
     }
 
     @Override

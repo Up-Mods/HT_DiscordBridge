@@ -2,6 +2,7 @@ package dev.upcraft.ht.discordbridge.plugin;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.HytaleServer;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.ShutdownReason;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -96,7 +97,7 @@ public class DiscordBridgeAIO extends JavaPlugin {
 
         bot = HtDiscordBot.startAsync(startupConfig, pluginSearchPath).exceptionally(throwable -> {
             LOGGER.atSevere().withCause(throwable).log("Discord bot error");
-            HytaleServer.get().shutdownServer(ShutdownReason.VALIDATE_ERROR.withMessage("Discord bot error: " + throwable.getMessage()));
+            HytaleServer.get().shutdownServer(ShutdownReason.VALIDATE_ERROR.withMessage(Message.raw("Discord bot error: " + throwable.getMessage())));
             return null;
         });
 
