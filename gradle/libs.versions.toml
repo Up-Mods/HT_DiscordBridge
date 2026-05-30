@@ -9,7 +9,7 @@ kotlin-libraries = "0.1.0+kotlin2.2.10"
 
 kotlin = "2.2.20"
 kotlin-ksp = "2.3.4"
-kordex-gradle = "1.9.0"
+kordex-gradle = "1.9.2"
 kordex-i18n = "1.1.1"
 kordex = "2.4.1-SNAPSHOT"
 ktor = "3.4.0"
