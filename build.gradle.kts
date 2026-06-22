@@ -5,7 +5,7 @@ plugins {
     idea
     `java-library`
     `maven-publish`
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.4.1"
+    alias(libs.plugins.idea.ext)
 }
 
 val buildTime = Date()

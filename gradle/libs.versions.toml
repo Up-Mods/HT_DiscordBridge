@@ -1,6 +1,7 @@
 [versions]
 hytale-mod-plugin = "0.+"
 shadow = "9.4.2"
+idea-ext = "1.4.1"
 
 jetbrains-annotations = "26.1.0"
 jspecify = "1.0.0"
@@ -58,4 +59,5 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
 kordex-plugin = { id = "dev.kordex.gradle.kordex", version.ref = "kordex-gradle" }
 kordex-plugin-i18n = { id = "dev.kordex.gradle.i18n", version.ref = "kordex-i18n" }
 
+idea-ext = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "idea-ext" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
