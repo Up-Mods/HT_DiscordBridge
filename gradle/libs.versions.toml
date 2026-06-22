@@ -8,11 +8,11 @@ jspecify = "1.0.0"
 
 kotlin-libraries = "0.1.0+kotlin2.2.10"
 
-kotlin = "2.2.20"
-kotlin-ksp = "2.3.4"
+kotlin = "2.3.10"
+kotlin-ksp = "2.3.5"
 kordex-gradle = "1.9.2"
 kordex-i18n = "1.1.1"
-kordex = "2.4.1-SNAPSHOT"
+kordex = "2.5.0-SNAPSHOT"
 ktor = "3.4.0"
 
 kx-coroutines-core-jvm = "1.10.2"
@@ -20,7 +20,7 @@ kotlin-logging = "7.0.13"
 
 autoservice = "1.1.1"
 autoservice-ksp = "1.2.0"
-bouncycastle = "1.80"
+bouncycastle = "1.84"
 slf4j = "2.0.17"
 
 aspect = "26.5.30"
