@@ -32,5 +32,13 @@ dependencyResolutionManagement {
         maven("https://mirror-repo.kordex.dev")
         maven("https://maven.hytale-mods.dev/releases")
         maven("https://maven.uuid.gg/releases")
+        exclusiveContent {
+            forRepository {
+                maven("https://repo.helpch.at/releases")
+            }
+            filter {
+                includeGroupAndSubgroups("at.helpch")
+            }
+        }
     }
 }

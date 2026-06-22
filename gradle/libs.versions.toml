@@ -25,6 +25,7 @@ slf4j = "2.0.17"
 
 aspect = "26.5.30"
 tinymessage = "2.0.1"
+placeholderapi = "1.0.8"
 
 [libraries]
 jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
@@ -46,6 +47,7 @@ slf4j-jul = { module = "org.slf4j:slf4j-jdk14", version.ref = "slf4j" }
 
 aspect = { module = "dev.upcraft.ht:Aspect", version.ref = "aspect" }
 tinymessage = { module = "com.github.Zoltus:TinyMessage", version.ref = "tinymessage" }
+placeholderapi = { module = "at.helpch:placeholderapi-hytale", version.ref = "placeholderapi" }
 
 [bundles]
 

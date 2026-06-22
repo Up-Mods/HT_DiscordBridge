@@ -14,7 +14,9 @@
   "Dependencies": {
     "Up:Aspect": ">=${aspect_version}"
   },
-  "OptionalDependencies": {},
+  "OptionalDependencies": {
+    "HelpChat:PlaceholderAPI": ">=1.0.8"
+  },
   "DisabledByDefault": false,
   "IncludesAssetPack": true,
   "Main": "${plugin_main_entrypoint}"

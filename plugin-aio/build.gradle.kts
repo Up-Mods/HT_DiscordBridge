@@ -25,6 +25,8 @@ dependencies {
     shadow(libs.kx.coroutines.core.jvm)
     implementation(libs.kx.coroutines.core.jvm)
 
+    implementation(libs.placeholderapi)
+
     shadow(libs.slf4j.jul)
     runtimeOnly(libs.slf4j.jul)
 
