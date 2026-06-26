@@ -121,6 +121,9 @@ public class DiscordBridgeAIO extends JavaPlugin {
     }
 
     public void initHytaleService(AIOHytaleService service) {
+        // make sure the coroutine worker can load classes correctly
+        Thread.currentThread().setContextClassLoader(PluginManager.get().getBridgeClassLoader());
+
         if(PluginManager.get().getPlugin(PluginIdentifier.fromString("HelpChat:PlaceholderAPI")) != null) {
             PlaceholderApiCompat.registerProcessors(service);
         }
