@@ -1,16 +1,17 @@
 package dev.upcraft.ht.discordbridge.discord.util
 
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.entity.Member
+import dev.kordex.i18n.Key
 import dev.upcraft.ht.discordbridge.discord.i18n.Translations
 import dev.upcraft.ht.discordbridge.model.player.PartialPlayerInfo
+import kotlinx.coroutines.future.await
 import java.util.*
 
-fun MutableMap<String, Any?>.addPlayerContext(player: PartialPlayerInfo, name: String = "player") {
+suspend fun MutableMap<String, Any?>.addPlayerContext(player: PartialPlayerInfo, name: String = "player") {
     addPlayerContext(player.displayName, player.uuid, name)
 }
 
-fun MutableMap<String, Any?>.addPlayerContext(username: String?, uuid: UUID?, name: String = "player") {
+suspend fun MutableMap<String, Any?>.addPlayerContext(username: String?, uuid: UUID?, name: String = "player") {
     username?.let { this["${name}.username"] = it }
     uuid?.let { this["${name}.uuid"] = it }
     addServerContext()
@@ -22,7 +23,7 @@ fun MutableMap<String, Any?>.addMemberContext(member: Member, name: String = "us
     this["${name}.display_name"] = member.effectiveName
 }
 
-fun MutableMap<String, Any?>.addMessageContext(message: String?, sender: PartialPlayerInfo? = null) {
+suspend fun MutableMap<String, Any?>.addMessageContext(message: String?, sender: PartialPlayerInfo? = null) {
     this["message.content"] = message
     sender?.let { addPlayerContext(it) }
 }
@@ -41,3 +42,11 @@ fun MutableMap<String, Any?>.addServerContext() {
         "player_count" to Hytale.onlinePlayers
     )
 }
+
+suspend fun Key.translateWithReplacements(playerId: UUID? = null, replacements: Map<String, Any?>): String {
+    val translated = translateNamed(replacements)
+    return Hytale.applyReplacements(playerId, translated).await()
+}
+
+suspend fun Key.translateWithReplacements(playerId: UUID? = null, vararg replacements: Pair<String, Any?>): String
+    = translateWithReplacements(playerId, replacements.toMap())

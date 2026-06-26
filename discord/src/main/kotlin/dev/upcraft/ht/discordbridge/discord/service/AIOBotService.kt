@@ -29,7 +29,7 @@ class AIOBotService : BotServiceInternal {
     override fun getStartupFuture(): CompletableFuture<Void?> = botStartup
 
     override fun onPlayerJoin(player: PlayerInfo) = runAsync<ServerStatusExtension> {
-        val translatedMessage = Translations.Player.join.translateNamed(buildMap { addPlayerContext(player) })
+        val translatedMessage = Translations.Player.join.translateWithReplacements(player.uuid, buildMap { addPlayerContext(player) })
         getJoinLeaveChannel()?.createMessage(translatedMessage)
         bot.editPresence { fromServerStatus() }
     }
@@ -40,7 +40,7 @@ class AIOBotService : BotServiceInternal {
             PlayerDisconnectReason.Type.SERVER_KICK -> if (reason.message == null) Translations.Player.kick else Translations.Player.kickReason
             else -> Translations.Player.lostConnection
         }
-        val translatedMessage = translationKey.translateNamed(buildMap {
+        val translatedMessage = translationKey.translateWithReplacements(player.uuid, buildMap {
             addPlayerContext(player)
             this["reason"] = reason.message
         })
@@ -59,15 +59,15 @@ class AIOBotService : BotServiceInternal {
     }
 
     override fun onServerShutdown(): CompletableFuture<Void?> = runFuture<ServerStatusExtension> {
+        bot.editPresence { fromServerStatus(ServerStatus.SHUTTING_DOWN) }
         val translatedMessage = Translations.Server.shutdown.translateNamed(buildMap {
             addServerContext()
         })
         getServerStatusChannel()?.createMessage(translatedMessage)
-        bot.editPresence { fromServerStatus(ServerStatus.SHUTTING_DOWN) }
     }
 
     override fun onPlayerChat(player: PartialPlayerInfo, message: String) = runAsync<ChatRelayExtension> {
-        val translatedMessage = Translations.Chat.message.translateNamed(buildMap {
+        val translatedMessage = Translations.Chat.message.translateWithReplacements(player.uuid, buildMap {
             addMessageContext(message, player)
         })
         getChatRelayChannel()?.createMessage {

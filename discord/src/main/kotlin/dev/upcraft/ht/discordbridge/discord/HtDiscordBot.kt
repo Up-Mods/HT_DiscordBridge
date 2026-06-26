@@ -56,10 +56,6 @@ object HtDiscordBot {
 
             presence { fromServerStatus(ServerStatus.STARTING) }
 
-            plugins {
-
-            }
-
             kord {
                 httpClient = HttpClient(Java) {
                     install(ContentNegotiation) {

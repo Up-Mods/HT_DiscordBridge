@@ -13,10 +13,7 @@ import dev.kordex.core.extensions.chatCommand
 import dev.upcraft.ht.discordbridge.commands.WhitelistCommand
 import dev.upcraft.ht.discordbridge.discord.extensions.DiscordBridgeExtension
 import dev.upcraft.ht.discordbridge.discord.i18n.Translations
-import dev.upcraft.ht.discordbridge.discord.util.Hytale
-import dev.upcraft.ht.discordbridge.discord.util.StartupConfig
-import dev.upcraft.ht.discordbridge.discord.util.addPlayerContext
-import dev.upcraft.ht.discordbridge.discord.util.asDiscordUser
+import dev.upcraft.ht.discordbridge.discord.util.*
 import kotlinx.coroutines.future.await
 
 class CommandProxyExtension(cfg: StartupConfig) : DiscordBridgeExtension(cfg) {
@@ -88,7 +85,7 @@ class CommandProxyExtension(cfg: StartupConfig) : DiscordBridgeExtension(cfg) {
                     WhitelistCommand.ResultType.ALREADY_WHITELISTED -> Translations.Commands.Whitelist.Result.alreadyAdded
                 }
                 event.message.reply {
-                    content = message.translateNamed(buildMap {
+                    content = message.translateWithReplacements(result.playerInfo?.uuid, buildMap {
                         result.playerInfo?.let { addPlayerContext(it) }
                             ?: run { addPlayerContext(playerUsername, null) }
                     })

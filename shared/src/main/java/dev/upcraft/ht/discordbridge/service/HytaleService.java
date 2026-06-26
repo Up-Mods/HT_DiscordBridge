@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.OptionalInt;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public interface HytaleService {
@@ -28,4 +29,6 @@ public interface HytaleService {
     CompletableFuture<Void> onDiscordChat(DiscordUser user, String message);
 
     CompletableFuture<WhitelistCommand.Result> whitelistPlayer(DiscordUser source, String playerUsername, @Nullable String commandMessageId);
+
+    CompletableFuture<String> applyReplacements(@Nullable UUID playerId, String message);
 }

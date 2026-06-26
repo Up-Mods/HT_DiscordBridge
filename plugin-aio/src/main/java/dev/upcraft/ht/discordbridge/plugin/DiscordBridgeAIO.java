@@ -1,19 +1,23 @@
 package dev.upcraft.ht.discordbridge.plugin;
 
+import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.ShutdownReason;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.plugin.PluginManager;
 import com.hypixel.hytale.server.core.util.Config;
 import dev.upcraft.ht.aspect.util.Env;
 import dev.upcraft.ht.discordbridge.discord.HtDiscordBot;
 import dev.upcraft.ht.discordbridge.discord.util.StartupConfig;
+import dev.upcraft.ht.discordbridge.plugin.compat.PlaceholderApiCompat;
 import dev.upcraft.ht.discordbridge.plugin.config.BotConfigCodecs;
 import dev.upcraft.ht.discordbridge.plugin.events.ChatHandler;
 import dev.upcraft.ht.discordbridge.plugin.events.PlayerCountHandler;
 import dev.upcraft.ht.discordbridge.plugin.events.ServerStatusHandler;
+import dev.upcraft.ht.discordbridge.plugin.service.AIOHytaleService;
 import dev.upcraft.ht.discordbridge.plugin.util.PendingWhitelistEntries;
 import dev.upcraft.ht.discordbridge.util.Services;
 import org.jspecify.annotations.Nullable;
@@ -39,7 +43,6 @@ public class DiscordBridgeAIO extends JavaPlugin {
 
     public DiscordBridgeAIO(JavaPluginInit init) {
         super(init);
-        instance = this;
         LOGGER.atInfo().log("Hello from %s version %s", this.getName(), this.getManifest().getVersion().toString());
 
         if(Env.get(StartupConfig.BOT_TOKEN_KEY).filter(s -> !s.isBlank()).isPresent()) {
@@ -62,6 +65,7 @@ public class DiscordBridgeAIO extends JavaPlugin {
     @Override
     protected void setup() {
         instance = this;
+
         this.pendingWhitelistEntries.onSetup(this);
         if(hasValidStart) {
             ServerStatusHandler.register(this);
@@ -114,6 +118,12 @@ public class DiscordBridgeAIO extends JavaPlugin {
         }
         bot = null;
         instance = null;
+    }
+
+    public void initHytaleService(AIOHytaleService service) {
+        if(PluginManager.get().getPlugin(PluginIdentifier.fromString("HelpChat:PlaceholderAPI")) != null) {
+            PlaceholderApiCompat.registerProcessors(service);
+        }
     }
 
     public PendingWhitelistEntries getPendingWhitelistEntries() {

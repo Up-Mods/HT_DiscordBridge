@@ -8,6 +8,9 @@ plugins {
 val javaVersion = 25
 val buildNumber: Int = providers.environmentVariable("BUILD_NUMBER").map { it.toInt() }.orElse(0).get()
 
+val localRuntime by configurations.dependencyScope("localRuntime")
+configurations.runtimeClasspath.configure { extendsFrom(localRuntime) }
+
 dependencies {
     compileOnly(libs.jetbrains.annotations)
     compileOnly(libs.jspecify)
@@ -25,7 +28,8 @@ dependencies {
     shadow(libs.kx.coroutines.core.jvm)
     implementation(libs.kx.coroutines.core.jvm)
 
-    implementation(libs.placeholderapi)
+    compileOnly(libs.placeholderapi)
+    localRuntime(libs.placeholderapi)
 
     shadow(libs.slf4j.jul)
     runtimeOnly(libs.slf4j.jul)

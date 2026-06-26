@@ -3,7 +3,6 @@ package dev.upcraft.ht.discordbridge.plugin.service;
 import com.google.auto.service.AutoService;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.HytaleServer;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandManager;
 import com.hypixel.hytale.server.core.console.ConsoleSender;
@@ -13,6 +12,7 @@ import dev.upcraft.ht.aspect.util.PlayerHelper;
 import dev.upcraft.ht.discordbridge.commands.WhitelistCommand;
 import dev.upcraft.ht.discordbridge.model.discord.DiscordUser;
 import dev.upcraft.ht.discordbridge.model.server.ServerStatus;
+import dev.upcraft.ht.discordbridge.plugin.DiscordBridgeAIO;
 import dev.upcraft.ht.discordbridge.plugin.console.PluginConsoleSender;
 import dev.upcraft.ht.discordbridge.plugin.util.PendingWhitelistEntries;
 import dev.upcraft.ht.discordbridge.service.HytaleService;
@@ -21,14 +21,19 @@ import fi.sulku.hytale.TinyMsg;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
-import java.util.OptionalInt;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
 
 @AutoService(HytaleService.class)
 public class AIOHytaleService implements HytaleService {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private final List<BiFunction<@Nullable PlayerRef, String, String>> messageProcessors = new ArrayList<>();
+
+    public AIOHytaleService() {
+        DiscordBridgeAIO.getInstance().initHytaleService(this);
+    }
 
     @Override
     public Instant getStartupTime() {
@@ -107,5 +112,28 @@ public class AIOHytaleService implements HytaleService {
         return PendingWhitelistEntries.addPlayerToWhitelist(playerUUID, playerUsername);
     }
 
+    @Override
+    public CompletableFuture<String> applyReplacements(@Nullable UUID playerId, String message) {
+        if(messageProcessors.isEmpty()) {
+            return CompletableFuture.completedFuture(message);
+        }
 
+        var player = playerId != null ? Universe.get().getPlayer(playerId) : null;
+        var contextWorld = player != null && player.getWorldUuid() != null
+                ? Objects.requireNonNull(Universe.get().getWorld(player.getWorldUuid()), () -> "World %s not found for player %s (%s)".formatted(player.getWorldUuid(), player.getUsername(), player.getUuid()))
+                : Universe.get().getDefaultWorld();
+
+        return CompletableFuture.supplyAsync(() -> {
+            var formattedMessage = message;
+            for (BiFunction<PlayerRef, String, String> messageProcessor : messageProcessors) {
+                formattedMessage = messageProcessor.apply(player, formattedMessage);
+            }
+
+            return formattedMessage;
+        }, contextWorld);
+    }
+
+    public void registerMessageProcessor(BiFunction<@Nullable PlayerRef, String, String> processor) {
+        messageProcessors.add(processor);
+    }
 }

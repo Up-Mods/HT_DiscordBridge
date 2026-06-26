@@ -22,7 +22,13 @@ inline fun <reified T: Extension> runFuture(crossinline action: suspend T.() -> 
     return HtDiscordBot.INSTANCE?.let {
         GlobalScope.future(it.kordRef.coroutineContext) {
             it.findExtension<T>()?.apply {
-                action()
+                try {
+                    action()
+                } catch (e: Exception) {
+                    val wrapped = Throwable("Error while executing future task", e)
+                    serviceLogger.error(wrapped) { "Error while executing future task" }
+                    throw wrapped
+                }
             } ?: run {
                 serviceLogger.error { "Unable to find extension ${T::class}!" }
             }
@@ -39,7 +45,13 @@ inline fun <reified T: Extension> runAsync(crossinline action: suspend T.() -> U
     HtDiscordBot.INSTANCE?.let {
         it.kordRef.launch {
             it.findExtension<T>()?.apply {
-                action()
+                try {
+                    action()
+                } catch (e: Exception) {
+                    val wrapped = Throwable("Error while executing async task", e)
+                    serviceLogger.error(wrapped) { "Error while executing async task" }
+                    throw wrapped
+                }
             } ?: run {
                 serviceLogger.error(NoSuchElementException("${T::class}")) { "Unable to find extension ${T::class}!" }
             }
