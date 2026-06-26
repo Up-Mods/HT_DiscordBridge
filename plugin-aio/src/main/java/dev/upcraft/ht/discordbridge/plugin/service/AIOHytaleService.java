@@ -118,12 +118,18 @@ public class AIOHytaleService implements HytaleService {
             return CompletableFuture.completedFuture(message);
         }
 
-        var player = playerId != null ? Universe.get().getPlayer(playerId) : null;
-        var contextWorld = player != null && player.getWorldUuid() != null
+        @Nullable var player = playerId != null ? Universe.get().getPlayer(playerId) : null;
+        @Nullable var contextWorld = player != null && player.getWorldUuid() != null
                 ? Objects.requireNonNull(Universe.get().getWorld(player.getWorldUuid()), () -> "World %s not found for player %s (%s)".formatted(player.getWorldUuid(), player.getUsername(), player.getUuid()))
                 : Universe.get().getDefaultWorld();
 
+        if(contextWorld == null) {
+            LOGGER.atFine().log("Server has no default world set, cannot apply message processors! raw: %s", message);
+            return CompletableFuture.completedFuture(message);
+        }
+
         return CompletableFuture.supplyAsync(() -> {
+            LOGGER.atWarning().log("Thread: %s, Cls: %s", Thread.currentThread().getName(), Thread.currentThread().getContextClassLoader());
             var formattedMessage = message;
             for (BiFunction<PlayerRef, String, String> messageProcessor : messageProcessors) {
                 formattedMessage = messageProcessor.apply(player, formattedMessage);
