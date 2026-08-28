@@ -23,7 +23,7 @@ autoservice-ksp = "1.2.0"
 bouncycastle = "1.84"
 slf4j = "2.0.17"
 
-aspect = "26.5.30" # https://mods.cf/1423661
+aspect = "26.8.28" # https://mods.cf/1423661
 tinymessage = "2.0.1" # https://mods.cf/1430552
 placeholderapi = "1.0.8" # https://mods.cf/1445106
 
