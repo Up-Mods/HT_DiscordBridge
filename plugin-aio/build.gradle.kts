@@ -8,7 +8,7 @@ plugins {
 val javaVersion = 25
 val buildNumber: Int = providers.environmentVariable("BUILD_NUMBER").map { it.toInt() }.orElse(0).get()
 
-val localRuntime by configurations.dependencyScope("localRuntime")
+val localRuntime = configurations.dependencyScope("localRuntime")
 configurations.runtimeClasspath.configure { extendsFrom(localRuntime) }
 
 dependencies {
